@@ -16,6 +16,7 @@ dependencies:
   - numpy
   - networkx
   - httpx
+  - backoff
   - beautifulsoup4
   - lxml
   - pdfplumber

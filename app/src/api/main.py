@@ -1,5 +1,4 @@
 from __future__ import annotations
-import asyncio
 from fastapi import FastAPI
 from pydantic import BaseModel
 from agents.orchestrator import Orchestrator
@@ -13,9 +12,7 @@ class RunRequest(BaseModel):
     uf: str
     planmob_excel: str | None = None
 @app.post("/run")
-def run(req: RunRequest):
-    async def _run():
-        tools = Tools()
-        orch = Orchestrator(tools)
-        return await orch.run_city(req.city, req.uf, planmob_excel=req.planmob_excel)
-    return asyncio.run(_run())
+async def run(req: RunRequest):
+    tools = Tools()
+    orch = Orchestrator(tools)
+    return await orch.run_city(req.city, req.uf, planmob_excel=req.planmob_excel)
