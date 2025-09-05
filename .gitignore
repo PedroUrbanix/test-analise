@@ -1,0 +1,36 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.code-workspace
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Docker local artifacts
+app/outputs/
+app/data/
+app/.env
+
+# Terraform local state
+**/.terraform/
+**/.terraform/*
+**/*.tfstate
+**/*.tfstate.*
+**/crash.log
+**/override.tf
+**/override.tf.json
+
+# Node/npm (if any)
+node_modules/
+
+# Logs
+*.log
+

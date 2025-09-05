@@ -1,0 +1,4 @@
+municipio: "<<<Cidade>>>"
+uf: "<<<UF>>>"
+ibge_cod_municipio: "<<<IBGE7>>>"
+arcgis_zoneamento_layer: "<<<URL Layer Zoneamento (ArcGIS REST)>>>"

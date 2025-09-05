@@ -1,0 +1,48 @@
+name: App Deploy
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'app/**'
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: flows-ia-api:latest
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set Azure subscription
+        run: az account set --subscription "${{ vars.AZ_SUBSCRIPTION_ID }}"
+
+      - name: Docker login to ACR
+        uses: azure/docker-login@v2
+        with:
+          login-server: ${{ vars.AZ_ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build & Push (app)
+        run: |
+          docker build -t ${{ vars.AZ_ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }} app
+          docker push ${{ vars.AZ_ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}
+
+      - name: Deploy to Container Apps
+        run: |
+          az containerapp update \
+            --name ${{ vars.CA_NAME }} \
+            --resource-group ${{ vars.AZ_RESOURCE_GROUP }} \
+            --image ${{ vars.AZ_ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flows-ia"
+version = "0.1.0"
+description = "Pipeline IA para Fluxo de Pessoas (UrbaniX Group)"
+requires-python = ">=3.11"
+
+[project.scripts]
+flows-ia = "cli.__main__:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+# Descobrir pacotes no layout src/
+[tool.setuptools.packages.find]
+where = ["src"]

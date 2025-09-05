@@ -1,0 +1,39 @@
+name: flows
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - gdal
+  - geopandas
+  - shapely>=2.0
+  - pyproj
+  - fiona
+  - rtree
+  - libspatialindex
+  - h3-py
+  - pandas
+  - numpy
+  - networkx
+  - httpx
+  - beautifulsoup4
+  - lxml
+  - pdfplumber
+  - pyyaml
+  - pydantic>=2
+  - tqdm
+  - orjson
+  - fastapi
+  - uvicorn
+  - tesseract
+  - pytesseract
+  - poppler
+  - ghostscript
+  - black
+  - isort
+  - pip:
+      - typer[all]
+      - psycopg2-binary
+      - geoalchemy2
+      - pyogrio
+      - azure-storage-blob

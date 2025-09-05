@@ -1,0 +1,23 @@
+# VCS/CI
+.git/
+.github/
+
+# Local env/secrets
+.env
+.env.*
+
+# Local data/outputs (mounted as volumes)
+outputs/
+data/
+
+# Terraform/infra
+infra/
+**/.terraform/
+**/*.tfstate*
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
