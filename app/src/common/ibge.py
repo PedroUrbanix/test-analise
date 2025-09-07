@@ -7,6 +7,7 @@ from typing import Iterable
 
 import geopandas as gpd
 import httpx
+import backoff
 
 # Base oficial 2022 (pode variar). Permite override por IBGE_BASE_URL.
 DEFAULT_BASE = (
@@ -30,11 +31,20 @@ def _candidate_dirs(base: str, uf: str) -> list[str]:
     return out
 
 
+@backoff.on_exception(
+    backoff.expo,
+    (httpx.TimeoutException, httpx.ConnectError, httpx.HTTPStatusError),
+    max_time=60,
+)
+def _get_200(client: httpx.Client, url: str) -> httpx.Response:
+    r = client.get(url)
+    r.raise_for_status()
+    return r
+
+
 def _try_get(client: httpx.Client, url: str) -> httpx.Response | None:
     try:
-        r = client.get(url)
-        r.raise_for_status()
-        return r
+        return _get_200(client, url)
     except Exception:
         return None
 
@@ -47,6 +57,11 @@ def _find_zip_in_listing(html: str, cod_mun7: str) -> str | None:
     return m.group(1) if m else None
 
 
+@backoff.on_exception(
+    backoff.expo,
+    (httpx.TimeoutException, httpx.ConnectError, httpx.HTTPStatusError),
+    max_time=120,
+)
 def _download_zip_bytes(client: httpx.Client, url: str) -> bytes:
     r = client.get(url)
     r.raise_for_status()

@@ -4,8 +4,8 @@ channels:
 dependencies:
   - python=3.11
   - pip
-  - gdal
-  - geopandas
+  - gdal=3.6.*
+  - geopandas>=0.13
   - shapely>=2.0
   - pyproj
   - fiona
@@ -36,5 +36,5 @@ dependencies:
       - typer[all]
       - psycopg2-binary
       - geoalchemy2
-      - pyogrio
+      - pyogrio>=0.7
       - azure-storage-blob

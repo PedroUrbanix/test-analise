@@ -1,0 +1,20 @@
+# Ajuste e copie para terraform.tfvars (não commitar segredos reais)
+project = "flows-ia"
+env     = "dev"
+location = "brazilsouth"
+
+# Postgres (opcional: deixe vazio para senha randômica)
+# pg_admin_password = "SUA_SENHA_FORTE_123!"
+
+# Secrets opcionais gravados no Key Vault
+# openai_api_key       = ""
+# azure_openai_key     = ""
+# azure_openai_endpoint= ""
+# brave_api_key        = ""
+
+# Job opcional (ETL agendado)
+# enable_etl_job = true
+# etl_city = "Londrina"
+# etl_uf   = "PR"
+# etl_cron = "0 3 * * *"
+

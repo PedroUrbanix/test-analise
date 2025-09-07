@@ -1,16 +1,4 @@
 services:
-  app:
-    build: .
-    image: urbunix/flows-ia:latest
-    env_file: .env
-    volumes:
-      - ./outputs:/app/outputs
-      - ./data:/app/data
-      - ./config:/app/config
-    working_dir: /app
-    command: ["python", "-m", "cli", "--help"]
-    restart: "no"
-
   api:
     build: .
     image: urbunix/flows-ia:latest

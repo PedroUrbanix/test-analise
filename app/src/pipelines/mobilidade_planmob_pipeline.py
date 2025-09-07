@@ -31,11 +31,11 @@ class PlanMobETL:
         if not url: return False
         eng=get_engine(url); ensure_postgis(eng)
         with eng.begin() as con:
-            dfs["DOM"].to_sql("planmob_dom", con=con, if_exists="replace", index=False)
-            dfs["FAM"].to_sql("planmob_fam", con=con, if_exists="replace", index=False)
-            dfs["IND"].to_sql("planmob_ind", con=con, if_exists="replace", index=False)
-            dfs["VIAG"].to_sql("planmob_viag", con=con, if_exists="replace", index=False)
-            pd.DataFrame([indicadores]).to_sql("planmob_indicadores", con=con, if_exists="replace", index=False)
+            dfs["DOM"].to_sql("planmob_dom", con=con, if_exists="replace", index=False, chunksize=5000, method="multi")
+            dfs["FAM"].to_sql("planmob_fam", con=con, if_exists="replace", index=False, chunksize=5000, method="multi")
+            dfs["IND"].to_sql("planmob_ind", con=con, if_exists="replace", index=False, chunksize=5000, method="multi")
+            dfs["VIAG"].to_sql("planmob_viag", con=con, if_exists="replace", index=False, chunksize=5000, method="multi")
+            pd.DataFrame([indicadores]).to_sql("planmob_indicadores", con=con, if_exists="replace", index=False, chunksize=1000, method="multi")
         return True
     def run(self):
         dfs=self.load(); indic=self.compute_indicadores(dfs); od=self.export_od_por_zona(dfs); persisted=self.persist_postgres(dfs, indic)
